@@ -232,12 +232,12 @@ function App() {
       </header>
 
       {screen === 'home' ? <section className="landing-page">
-        <div className="landing-copy"><div className="eyebrow"><span className="eyebrow-line" /> MATCH DESK <span>COURT NOTES</span></div><h1>試合を，<em>記録する。</em></h1><p>テニスのスコアと戦術を記録します。</p></div>
+        <div className="landing-copy"><div className="eyebrow"><span className="eyebrow-line" /> MATCH DESK <span>COURT NOTES</span></div><h1>テニス分析アプリ</h1><p>テニスのスコアと戦術を記録します。</p></div>
         <div className="landing-actions"><button className="primary-button" type="button" onClick={() => { setImportError(''); setProject(null); setScreen('setup') }}>新規作成 <span>↗</span></button><button className="secondary-button" type="button" onClick={() => fileInput.current?.click()}><FileUp size={16} /> JSONファイルを開く</button></div>
         {importError && <p className="error-message" role="alert">{importError}</p>}
         <footer className="setup-footer"><span>COURT NOTES <span>·</span> TENNIS MATCH ANALYSIS</span><span>POINT BY POINT, PLAY BY PLAY.</span></footer>
       </section> : !project ? <section className="setup-page">
-        <div className="setup-intro"><div className="eyebrow"><span className="eyebrow-line" /> MATCH DESK <span>01 / SETUP</span></div><h1>試合を，<em>記録する。</em></h1><p>試合情報を設定してください。</p></div>
+        <div className="setup-intro"><div className="eyebrow"><span className="eyebrow-line" /> MATCH DESK <span>01 / SETUP</span></div><h1>テニス分析アプリ</h1><p>試合情報を設定してください。</p></div>
         <form className="setup-form" onSubmit={createProject}>
           <div className="form-section"><div className="section-heading"><span className="section-index">01</span><h2>試合情報</h2><span className="section-rule" /></div>
             <label className="field-label" htmlFor="match-title">タイトル <span>OPTIONAL</span></label><input id="match-title" className="text-input title-input" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="例：秋季クラブ内戦" />
