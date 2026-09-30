@@ -19,3 +19,9 @@ npm run dev
 - 戦術ボードで選手を移動し、色を選んで矢印や線を描画。ボールは任意で追加
 - 試合をJSONに保存して再読込。作業中のデータはブラウザーにも自動保存
 - スコア表と同じ列構成でCSVに書き出し
+
+## GitHub Pages
+
+`main` へのpushで `.github/workflows/pages.yml` がビルドとデプロイを行います。GitHubリポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** に設定してください。
+
+公開URL: https://kazukicode.github.io/tennis-match-analysis/
