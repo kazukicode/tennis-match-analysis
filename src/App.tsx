@@ -4,7 +4,7 @@ import { calculateScore, pointLabel, safeName, type CourtAnnotation, type Player
 import './App.css'
 
 const letters = ['A', 'B', 'C', 'D']
-const drawingColors = ['#ffffff', '#d8f079', '#ff927e', '#63c6e4', '#f6d15c', '#283d31']
+const drawingColors = ['#e53935', '#d8f079', '#ff927e', '#63c6e4', '#f6d15c', '#283d31']
 
 function readProject(value: unknown): Project | null {
   if (!value || typeof value !== 'object') return null
