@@ -22,6 +22,6 @@ npm run dev
 
 ## GitHub Pages
 
-`main` へのpushで `.github/workflows/pages.yml` がビルドとデプロイを行います。GitHubリポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** に設定してください。
+`main` へのpushで `.github/workflows/pages.yml` がビルドとデプロイを行います。GitHubリポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** に設定してください。公開元を切り替えた後に反映されない場合は、**Actions → Deploy to GitHub Pages → Run workflow** から一度実行してください。
 
 公開URL: https://kazukicode.github.io/tennis-match-analysis/
