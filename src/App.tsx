@@ -3,7 +3,6 @@ import { ArrowUpRight, CircleDot, ClipboardList, Download, FileJson2, FileUp, La
 import { calculateScore, pointLabel, safeName, type CourtAnnotation, type Player, type Project, type Side } from './tennis'
 import './App.css'
 
-const storageKey = 'court-notes-project'
 const letters = ['A', 'B', 'C', 'D']
 const drawingColors = ['#ffffff', '#d8f079', '#ff927e', '#63c6e4', '#f6d15c', '#283d31']
 
@@ -29,9 +28,7 @@ function readProject(value: unknown): Project | null {
 
 function App() {
   const [screen, setScreen] = useState<'home' | 'setup' | 'match'>('home')
-  const [project, setProject] = useState<Project | null>(() => {
-    try { return readProject(JSON.parse(localStorage.getItem(storageKey) ?? 'null')) } catch { return null }
-  })
+  const [project, setProject] = useState<Project | null>(null)
   const [title, setTitle] = useState('')
   const [format, setFormat] = useState<'singles' | 'doubles'>('singles')
   const [names, setNames] = useState([['', ''], ['', '']])
@@ -50,13 +47,6 @@ function App() {
   const courtRef = useRef<SVGSVGElement>(null)
   const score = project ? calculateScore(project) : null
   const setCount = project && score ? Math.max(project.rules.bestOf, score.completedSets.length + 1) : bestOf
-
-  useEffect(() => {
-    try {
-      if (project) localStorage.setItem(storageKey, JSON.stringify(project))
-      else localStorage.removeItem(storageKey)
-    } catch {}
-  }, [project])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -235,18 +225,15 @@ function App() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <button className="brand" type="button" onClick={() => setScreen('home')} aria-label="試合作成へ戻る"><span className="brand-mark"><span /></span><span>COURT<span className="brand-light">NOTES</span></span></button>
-        <div className="topbar-right"><span className="status-dot" /><span className="autosave-label">この端末に自動保存</span>
-          <button className="icon-button" type="button" onClick={() => fileInput.current?.click()} title="JSONを開く" aria-label="JSONを開く"><FileUp size={17} /></button>
-          {project && <button className="icon-button" type="button" onClick={downloadJson} title="JSONを保存" aria-label="JSONを保存"><Download size={17} /></button>}
-          <span className="byline">by K.Kitaoka</span>
+        <button className="brand" type="button" onClick={startNew} aria-label="試合作成へ戻る"><span className="brand-mark"><span /></span><span>COURT<span className="brand-light">NOTES</span></span></button>
+        <div className="topbar-right"><span className="byline">by K.Kitaoka</span>
           <input ref={fileInput} className="visually-hidden" type="file" accept=".json,application/json" onChange={openJson} />
         </div>
       </header>
 
       {screen === 'home' ? <section className="landing-page">
         <div className="landing-copy"><div className="eyebrow"><span className="eyebrow-line" /> MATCH DESK <span>COURT NOTES</span></div><h1>試合を，<em>記録する。</em></h1><p>テニスのスコアと戦術を記録します。</p></div>
-        <div className="landing-actions"><button className="primary-button" type="button" onClick={() => { setImportError(''); setProject(null); setScreen('setup') }}>新規作成 <span>↗</span></button><button className="secondary-button" type="button" onClick={() => fileInput.current?.click()}><FileUp size={16} /> JSONファイルを開く</button>{project && <button className="secondary-button" type="button" onClick={() => setScreen('match')}><ClipboardList size={16} /> 保存した試合を再開</button>}</div>
+        <div className="landing-actions"><button className="primary-button" type="button" onClick={() => { setImportError(''); setProject(null); setScreen('setup') }}>新規作成 <span>↗</span></button><button className="secondary-button" type="button" onClick={() => fileInput.current?.click()}><FileUp size={16} /> JSONファイルを開く</button></div>
         {importError && <p className="error-message" role="alert">{importError}</p>}
         <footer className="setup-footer"><span>COURT NOTES <span>·</span> TENNIS MATCH ANALYSIS</span><span>POINT BY POINT, PLAY BY PLAY.</span></footer>
       </section> : !project ? <section className="setup-page">
@@ -276,7 +263,7 @@ function App() {
         <div className="match-heading"><div><div className="eyebrow"><span className="eyebrow-line" /> MATCH IN PROGRESS <span>{project.format === 'singles' ? 'SINGLES' : 'DOUBLES'} · BEST OF {project.rules.bestOf}</span></div><h1>{project.title}</h1><p className="match-subtitle">{project.players[0].map((player) => player.name).join(' / ')} <span>vs</span> {project.players[1].map((player) => player.name).join(' / ')}</p></div>
           <div className="match-actions">{project.mode === 'score' && <button className="secondary-button csv-button" type="button" onClick={downloadCsv}><Download size={15} /> CSV出力</button>}<button className="secondary-button" type="button" onClick={downloadJson}><FileJson2 size={15} /> JSON保存</button></div>
         </div>
-        <nav className="mode-tabs" aria-label="作業モード"><button type="button" className={project.mode === 'score' ? 'active' : ''} onClick={() => updateProject((current) => ({ ...current, mode: 'score' }))}><ClipboardList size={16} /> スコア記録 <span>01</span></button><button type="button" className={project.mode === 'board' ? 'active' : ''} onClick={() => updateProject((current) => ({ ...current, mode: 'board' }))}><LayoutGrid size={16} /> 戦術ボード <span>02</span></button><div className="tabs-spacer" /><span className="autosaved"><span /> 自動保存済み</span></nav>
+        <nav className="mode-tabs" aria-label="作業モード"><button type="button" className={project.mode === 'score' ? 'active' : ''} onClick={() => updateProject((current) => ({ ...current, mode: 'score' }))}><ClipboardList size={16} /> スコア記録 <span>01</span></button><button type="button" className={project.mode === 'board' ? 'active' : ''} onClick={() => updateProject((current) => ({ ...current, mode: 'board' }))}><LayoutGrid size={16} /> 戦術ボード <span>02</span></button><div className="tabs-spacer" /></nav>
         {project.mode === 'score' && score ? <section className="score-workspace"><div className="score-main">
           <div className="scoreboard"><div className="scoreboard-top"><span>LIVE SCORE</span><span>{score.finished ? 'MATCH COMPLETE' : `SET ${Math.min(score.completedSets.length + 1, project.rules.bestOf)}`}</span></div>
             <div className="scoreboard-grid" style={{ gridTemplateColumns: `minmax(0, 1.2fr) repeat(${setCount}, minmax(0, .8fr)) minmax(40px, .7fr)` }}>

@@ -17,10 +17,6 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 .brand-mark span::after { content: ''; position: absolute; height: 1px; width: 13px; top: 6px; left: -2px; transform: rotate(-35deg); background: #244b35; }
 .topbar-right { display: flex; align-items: center; gap: 13px; }
 .byline { margin-left: 3px; color: #718076; font-family: 'DM Sans', Georgia, serif; font-size: 13px; font-style: italic; font-weight: 500; white-space: nowrap; }
-.status-dot, .autosaved span { width: 7px; height: 7px; background: #66a56b; border-radius: 50%; }
-.autosave-label { color: #758079; font-size: 11px; }
-.icon-button { width: 34px; height: 34px; padding: 0; display: grid; place-items: center; border: 1px solid #dfe2d9; background: transparent; cursor: pointer; transition: background .18s ease, border-color .18s ease; }
-.icon-button:hover { background: #e9eddf; border-color: #aab89d; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; clip: rect(0, 0, 0, 0); overflow: hidden; white-space: nowrap; }
 
 .setup-page { max-width: 910px; margin: 0 auto; padding: 57px 0 0; animation: arrive .45s ease both; }
@@ -105,8 +101,6 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 .mode-tabs > button.active::after { content: ''; position: absolute; left: 0; right: 19px; bottom: -1px; height: 3px; background: #df7055; }
 .mode-tabs > button > span { color: #9aa198; font-family: 'DM Mono', monospace; font-size: 9px; }
 .tabs-spacer { flex: 1; }
-.autosaved { display: flex; align-items: center; gap: 7px; color: #8a948c; font-size: 10px; }
-.autosaved span { display: block; }
 .score-workspace, .board-workspace { max-width: 1450px; margin: 0 auto; padding: 25px 0 35px; animation: arrive .38s ease both; }
 .score-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 285px; gap: 25px; align-items: stretch; }
 .score-main { min-width: 0; }
@@ -208,7 +202,6 @@ kbd { padding: 2px 4px; border: 1px solid #daddd5; background: #fff; color: #536
 @media (max-width: 680px) {
   .app-shell { padding: 0 17px; }
   .topbar { height: 58px; }
-  .autosave-label, .status-dot { display: none; }
   .topbar-right { gap: 8px; }
   .byline { font-size: 11px; }
   .setup-page { padding-top: 39px; }
@@ -236,7 +229,6 @@ kbd { padding: 2px 4px; border: 1px solid #daddd5; background: #fff; color: #536
   .mode-tabs > button { gap: 6px; padding-right: 9px; margin-right: 9px; font-size: 11px; }
   .mode-tabs > button.active::after { right: 9px; }
   .mode-tabs > button > span { display: none; }
-  .autosaved { font-size: 0; }
   .score-workspace { grid-template-columns: 1fr; padding-top: 16px; }
   .scoreboard-top { padding: 0 12px; }
   .scoreboard-grid { padding: 9px 7px 11px; }
@@ -275,6 +267,5 @@ kbd { padding: 2px 4px; border: 1px solid #daddd5; background: #fff; color: #536
   .app-shell { padding: 0 12px; }
   .brand { gap: 7px; font-size: 17px; }
   .brand-mark { width: 23px; height: 23px; }
-  .icon-button { width: 30px; height: 30px; }
   .byline { margin-left: 0; font-size: 10px; }
 }
